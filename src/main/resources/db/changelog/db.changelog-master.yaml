@@ -1,0 +1,82 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: me
+      changes:
+        - createTable:
+            tableName: courses
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_free
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: me
+      changes:
+        - createTable:
+            tableName: students
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: birthday
+                  type: DATE
+                  constraints:
+                    nullable: true
+              - column:
+                  name: course_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: 3
+      author: me
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: students
+            baseColumnNames: course_id
+            constraintName: fk_student_course
+            referencedTableName: courses
+            referencedColumnNames: id
+            onDelete: SET NULL
