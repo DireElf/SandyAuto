@@ -122,8 +122,8 @@
         </button>
     </div>
 
-    <!-- Вкладки с курсами -->
-    <ul class="nav nav-tabs mt-3" id="courseTabs" role="tablist">
+    <!-- Course Tabs -->
+    <ul class="nav nav-tabs" id="courseTabs" role="tablist">
         <li th:each="course : ${courses}" class="nav-item" role="presentation">
             <button class="nav-link"
                     th:id="'tab-course-' + ${course.id}"
@@ -137,8 +137,8 @@
         </li>
     </ul>
 
-    <!-- Контент вкладок -->
-    <div class="tab-content mt-4" id="courseTabsContent">
+    <!-- Course Tab Content with Student Pagination -->
+    <div class="tab-content" id="courseTabsContent">
         <div th:each="course : ${courses}" class="tab-pane fade"
              th:id="'course-' + ${course.id}"
              th:classappend="${course.id == activeTab} ? ' show active'"
@@ -147,19 +147,41 @@
             <table class="table table-striped table-hover">
                 <thead class="table-dark">
                 <tr>
-                    <th>Student Name</th>
-                    <th>Student Surname</th>
+                    <th>Name</th>
+                    <th>Surname</th>
                     <th>Email</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="student : ${course.students}">
+                <tr th:each="student : ${students}">
                     <td th:text="${student.name}"></td>
                     <td th:text="${student.surname}"></td>
                     <td th:text="${student.email}"></td>
                 </tr>
+                <tr th:if="${#lists.isEmpty(students)}">
+                    <td colspan="3">No students enrolled.</td>
+                </tr>
                 </tbody>
             </table>
+
+            <!-- Pagination -->
+            <nav th:if="${studentsPage.totalPages > 1}" aria-label="Student pagination">
+                <ul class="pagination">
+                    <li th:classappend="${studentsPage.first} ? 'disabled'" class="page-item">
+                        <a th:href="@{/courses?activeTab=${course.id}&studentPage=${studentsPage.number - 1}}"
+                           class="page-link">Previous</a>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(1, studentsPage.totalPages)}"
+                        th:classappend="${i == studentsPage.number + 1} ? 'active'" class="page-item">
+                        <a th:href="@{/courses?activeTab=${course.id}&studentPage=${i - 1}}"
+                           class="page-link" th:text="${i}"></a>
+                    </li>
+                    <li th:classappend="${studentsPage.last} ? 'disabled'" class="page-item">
+                        <a th:href="@{/courses?activeTab=${course.id}&studentPage=${studentsPage.number + 1}}"
+                           class="page-link">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
