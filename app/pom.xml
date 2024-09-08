@@ -12,10 +12,10 @@
         <relativePath/>
     </parent>
 
-    <groupId>sandy.auto</groupId>
-    <artifactId>sandy</artifactId>
+    <groupId>sandybox.auto</groupId>
+    <artifactId>sandybox</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Sandy</name>
+    <name>SandyBox</name>
     <description>Project for practicing test automation skills</description>
 
     <properties>

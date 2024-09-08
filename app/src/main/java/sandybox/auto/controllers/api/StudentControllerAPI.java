@@ -1,8 +1,8 @@
-package sandy.auto.controllers.api;
+package sandybox.auto.controllers.api;
 
 import org.springframework.web.bind.annotation.*;
-import sandy.auto.models.Student;
-import sandy.auto.repository.StudentRepository;
+import sandybox.auto.models.Student;
+import sandybox.auto.repository.StudentRepository;
 
 import java.util.List;
 

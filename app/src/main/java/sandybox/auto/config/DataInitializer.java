@@ -1,12 +1,12 @@
-package sandy.auto.config;
+package sandybox.auto.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import sandy.auto.repository.CourseRepository;
-import sandy.auto.repository.StudentRepository;
+import sandybox.auto.repository.CourseRepository;
+import sandybox.auto.repository.StudentRepository;
 
-import static sandy.auto.utils.DataUtils.*;
+import static sandybox.auto.utils.DataUtils.*;
 
 @Component
 public class DataInitializer implements CommandLineRunner {

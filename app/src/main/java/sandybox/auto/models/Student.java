@@ -1,7 +1,7 @@
-package sandy.auto.models;
+package sandybox.auto.models;
 
 import javax.persistence.*;
-import sandy.auto.models.enums.Gender;
+import sandybox.auto.models.enums.Gender;
 
 import java.time.LocalDate;
 

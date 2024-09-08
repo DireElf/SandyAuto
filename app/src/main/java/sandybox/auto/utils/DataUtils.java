@@ -1,15 +1,14 @@
-package sandy.auto.utils;
+package sandybox.auto.utils;
 
 import com.github.javafaker.Faker;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import sandy.auto.models.Course;
-import sandy.auto.models.Student;
-import sandy.auto.repository.CourseRepository;
-import sandy.auto.repository.StudentRepository;
+import sandybox.auto.models.Course;
+import sandybox.auto.models.Student;
+import sandybox.auto.repository.CourseRepository;
+import sandybox.auto.repository.StudentRepository;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class DataUtils {
 
@@ -26,7 +25,7 @@ public class DataUtils {
         Faker faker = new Faker();
         for(int i = 1; i <= number; i++) {
             Course course = new Course();
-            course.setTitle(faker.programmingLanguage().name());
+            course.setTitle(faker.educator().course());
             course.setFree(true);
             courseRepository.save(course);
         }
@@ -38,7 +37,7 @@ public class DataUtils {
     {
         Faker faker = new Faker();
         List<Long> coursesIds = courseRepository.findAll().stream()
-                .mapToLong(Course::getId).boxed().toList();
+                .mapToLong(Course::getId).boxed().collect(Collectors.toList());
         for(int i = 1; i <= number; i++) {
             Student student = new Student();
             student.setName(faker.name().firstName());

@@ -1,21 +1,21 @@
-package sandy.auto.controllers;
+package sandybox.auto.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
-import sandy.auto.models.Course;
-import sandy.auto.models.Student;
-import sandy.auto.repository.CourseRepository;
-import sandy.auto.repository.StudentRepository;
-import sandy.auto.service.CourseService;
-import sandy.auto.service.StudentService;
+import sandybox.auto.models.Course;
+import sandybox.auto.models.Student;
+import sandybox.auto.repository.CourseRepository;
+import sandybox.auto.repository.StudentRepository;
+import sandybox.auto.service.CourseService;
+import sandybox.auto.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import sandy.auto.utils.DataUtils;
+import sandybox.auto.utils.DataUtils;
 
 import java.util.List;
 

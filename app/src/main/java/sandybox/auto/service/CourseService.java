@@ -1,11 +1,11 @@
-package sandy.auto.service;
+package sandybox.auto.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import sandy.auto.models.Course;
-import sandy.auto.repository.CourseRepository;
+import sandybox.auto.models.Course;
+import sandybox.auto.repository.CourseRepository;
 
 import java.util.List;
 

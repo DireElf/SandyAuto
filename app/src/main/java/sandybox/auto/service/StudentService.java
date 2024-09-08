@@ -1,12 +1,13 @@
-package sandy.auto.service;
+package sandybox.auto.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import sandy.auto.models.Student;
-import sandy.auto.repository.StudentRepository;
+import sandybox.auto.models.Student;
+import sandybox.auto.repository.StudentRepository;
+
 @Service
 public class StudentService {
     @Autowired

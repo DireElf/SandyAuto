@@ -1,4 +1,4 @@
-package sandy.auto.models;
+package sandybox.auto.models;
 
 import javax.persistence.*;
 import java.util.HashSet;
