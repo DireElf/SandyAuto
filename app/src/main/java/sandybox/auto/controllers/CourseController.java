@@ -32,19 +32,13 @@ public class CourseController {
         List<Course> courses = courseService.findAll();
         model.addAttribute("courses", courses);
 
-        Long activeCourseId = activeTab != null ? activeTab : (!courses.isEmpty() ? courses.get(0).getId() : null);
+        Long activeCourseId = activeTab != null ? activeTab : courses.get(0).getId();
         model.addAttribute("activeTab", activeCourseId);
 
-        if (activeCourseId != null) {
-            Page<Student> studentsPage = studentService
-                    .findByCourseId(activeCourseId, PageRequest.of(studentPage, 10));
-            model.addAttribute("studentsPage", studentsPage);
-            model.addAttribute("students", studentsPage.getContent());
-        } else {
-            model.addAttribute("studentsPage", Page.empty());
-            model.addAttribute("students", List.of());
-        }
-
+        Page<Student> studentsPage = studentService
+                .findByCourseId(activeCourseId, PageRequest.of(studentPage, 10));
+        model.addAttribute("studentsPage", studentsPage);
+        model.addAttribute("students", studentsPage.getContent());
         return "courses";
     }
 
