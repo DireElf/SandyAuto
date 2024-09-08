@@ -34,7 +34,7 @@
             background-color: #6c757d;
             border-color: #6c757d;
         }
-		.navbar {
+        .navbar {
             background-color: #343a40;
         }
         .navbar-nav .nav-link {
@@ -42,6 +42,23 @@
         }
         .navbar-nav .nav-link:hover {
             color: #adb5bd;
+        }
+
+        /* Вертикальные вкладки с прокруткой */
+        .nav-tabs {
+            display: flex;
+            flex-direction: column; /* Вертикальное расположение вкладок */
+            width: 200px; /* Ширина блока с вкладками */
+            max-height: 80vh; /* Ограничиваем высоту 80% экрана */
+            overflow-y: auto; /* Включаем вертикальную прокрутку */
+        }
+        .nav-tabs .nav-item {
+            margin-bottom: 5px; /* Отступ между вкладками */
+        }
+
+        /* Контент вкладок должен располагаться справа от списка вкладок */
+        .tab-content {
+            margin-left: 220px; /* Отступ для контента, чтобы он отображался справа от вкладок */
         }
     </style>
 </head>
@@ -71,54 +88,6 @@
     </div>
 </nav>
 
-<!--<div class="container">-->
-<!--    <div class="tab-content-container">-->
-<!--        <h1>Courses</h1>-->
-
-<!--        &lt;!&ndash; Вкладки с курсами &ndash;&gt;-->
-<!--        <ul class="nav nav-tabs" id="courseTabs" role="tablist">-->
-<!--            &lt;!&ndash; Вкладки с курсами &ndash;&gt;-->
-<!--            <li th:each="course : ${courses}" class="nav-item" role="presentation">-->
-<!--                <button class="nav-link"-->
-<!--                        th:id="'tab-course-' + ${course.id}"-->
-<!--                        th:classappend="${course.id == activeTab} ? ' active'"-->
-<!--                        data-bs-toggle="tab"-->
-<!--                        th:data-bs-target="'#course-' + ${course.id}"-->
-<!--                        type="button"-->
-<!--                        role="tab"-->
-<!--                        th:text="${course.title}">-->
-<!--                </button>-->
-<!--            </li>-->
-<!--        </ul>-->
-
-<!--        &lt;!&ndash; Контент вкладок &ndash;&gt;-->
-<!--        <div class="tab-content mt-4" id="courseTabsContent">-->
-<!--            <div th:each="course : ${courses}" class="tab-pane fade"-->
-<!--                 th:id="'course-' + ${course.id}"-->
-<!--                 th:classappend="${course.id == activeTab} ? ' show active'"-->
-<!--                 role="tabpanel">-->
-<!--                <h2 th:text="'Students in ' + ${course.title}"></h2>-->
-<!--                <table class="table table-striped table-hover">-->
-<!--                    <thead class="table-dark">-->
-<!--                    <tr>-->
-<!--                        <th>Student Name</th>-->
-<!--                        <th>Student Surname</th>-->
-<!--                        <th>Email</th>-->
-<!--                    </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody>-->
-<!--                    <tr th:each="student : ${course.students}">-->
-<!--                        <td th:text="${student.name}"></td>-->
-<!--                        <td th:text="${student.surname}"></td>-->
-<!--                        <td th:text="${student.email}"></td>-->
-<!--                    </tr>-->
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <h1>Courses</h1>
@@ -128,44 +97,50 @@
         </button>
     </div>
 
-    <!-- Вкладки с курсами -->
-    <ul class="nav nav-tabs mt-3" id="courseTabs" role="tablist">
-        <li th:each="course : ${courses}" class="nav-item" role="presentation">
-            <button class="nav-link"
-                    th:id="'tab-course-' + ${course.id}"
-                    th:classappend="${course.id == activeTab} ? ' active'"
-                    data-bs-toggle="tab"
-                    th:data-bs-target="'#course-' + ${course.id}"
-                    type="button"
-                    role="tab"
-                    th:text="${course.title}">
-            </button>
-        </li>
-    </ul>
+    <div class="row">
+        <!-- Вертикальные вкладки с прокруткой -->
+        <div class="col-3">
+            <ul class="nav nav-tabs" id="courseTabs" role="tablist">
+                <li th:each="course : ${courses}" class="nav-item" role="presentation">
+                    <button class="nav-link"
+                            th:id="'tab-course-' + ${course.id}"
+                            th:classappend="${course.id == activeTab} ? ' active'"
+                            data-bs-toggle="tab"
+                            th:data-bs-target="'#course-' + ${course.id}"
+                            type="button"
+                            role="tab"
+                            th:text="${course.title}">
+                    </button>
+                </li>
+            </ul>
+        </div>
 
-    <!-- Контент вкладок -->
-    <div class="tab-content mt-4" id="courseTabsContent">
-        <div th:each="course : ${courses}" class="tab-pane fade"
-             th:id="'course-' + ${course.id}"
-             th:classappend="${course.id == activeTab} ? ' show active'"
-             role="tabpanel">
-            <h2 th:text="'Students in ' + ${course.title}"></h2>
-            <table class="table table-striped table-hover">
-                <thead class="table-dark">
-                <tr>
-                    <th>Student Name</th>
-                    <th>Student Surname</th>
-                    <th>Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="student : ${course.students}">
-                    <td th:text="${student.name}"></td>
-                    <td th:text="${student.surname}"></td>
-                    <td th:text="${student.email}"></td>
-                </tr>
-                </tbody>
-            </table>
+        <!-- Контент вкладок -->
+        <div class="col-9">
+            <div class="tab-content" id="courseTabsContent">
+                <div th:each="course : ${courses}" class="tab-pane fade"
+                     th:id="'course-' + ${course.id}"
+                     th:classappend="${course.id == activeTab} ? ' show active'"
+                     role="tabpanel">
+                    <h2 th:text="'Students in ' + ${course.title}"></h2>
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Student Surname</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="student : ${course.students}">
+                            <td th:text="${student.name}"></td>
+                            <td th:text="${student.surname}"></td>
+                            <td th:text="${student.email}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -196,7 +171,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

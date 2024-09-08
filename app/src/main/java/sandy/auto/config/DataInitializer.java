@@ -20,7 +20,7 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         createDefaultCourse(courseRepository);
-        addRandomCourses(courseRepository, 1);
-        addRandomStudents(courseRepository,studentRepository, 1);
+        addRandomCourses(courseRepository, 12);
+        addRandomStudents(courseRepository,studentRepository, 300);
     }
 }

@@ -1,15 +1,14 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+app/target/
+!app/.mvn/wrapper/maven-wrapper.jar
+!app/**/src/main/**/target/
+!app/**/src/test/**/target/
 
 ### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+/.idea
+app/.idea
+app/*.iws
+app/*.iml
+app/*.ipr
 
 ### DB ###
-*.db
-
+app/*.db
