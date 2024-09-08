@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 import sandybox.auto.models.Course;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
-    @Query(value = "SELECT * FROM courses", nativeQuery = true)
-    Page<Course> findAllWithStudents(Pageable pageable);
 
     boolean existsByTitle(String noCourse);
 }
