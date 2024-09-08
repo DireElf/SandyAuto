@@ -1,5 +1,11 @@
 package sandybox.auto.controllers.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 import sandybox.auto.models.Student;
 import sandybox.auto.repository.StudentRepository;
@@ -7,43 +13,80 @@ import sandybox.auto.repository.StudentRepository;
 import java.util.List;
 
 @RestController
+@Tag(name = "Students", description = "API for managing students")
+@RequestMapping("api/students")
 public class StudentControllerAPI {
+
     private final StudentRepository studentRepository;
 
     public StudentControllerAPI(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
-    @GetMapping("api/students")
-    List<Student> getAllStudents() {
+    @Operation(summary = "Get all students", description = "Retrieve all students from the system")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the students",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Student.class))}),
+            @ApiResponse(responseCode = "404", description = "Students not found", content = @Content)
+    })
+    @GetMapping
+    public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
-    @GetMapping("api/students/{id}")
-    Student getStudentById(@PathVariable Long id) {
-        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found"));
+    @Operation(summary = "Get a student by ID", description = "Retrieve a specific student by their ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the student",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Student.class))}),
+            @ApiResponse(responseCode = "404", description = "Student not found", content = @Content)
+    })
+    @GetMapping("/{id}")
+    public Student getStudentById(@PathVariable Long id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
     }
 
-    @PostMapping("api/students")
-    Student addStudent(@RequestBody Student student) {
+    @Operation(summary = "Add a new student", description = "Create a new student in the system")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Student created",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Student.class))}),
+            @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
+    })
+    @PostMapping
+    public Student addStudent(@RequestBody Student student) {
         return studentRepository.save(student);
     }
 
-    @PutMapping("api/students/{id}")
-    Student replaceStudent(@RequestBody Student student, @PathVariable Long id) {
+    @Operation(summary = "Update a student", description = "Update details of an existing student")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Student updated",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Student.class))}),
+            @ApiResponse(responseCode = "404", description = "Student not found", content = @Content)
+    })
+    @PutMapping("/{id}")
+    public Student replaceStudent(@RequestBody Student student, @PathVariable Long id) {
         return studentRepository.findById(id)
-                .map(s -> {
-                    s.setName(student.getName());
-                    s.setSurname(student.getSurname());
-                    s.setEmail(student.getEmail());
-                    s.setGender(student.getGender());
-                    s.setBirthday(student.getBirthday());
-                    return studentRepository.save(s);
+                .map(existingStudent -> {
+                    existingStudent.setName(student.getName());
+                    existingStudent.setSurname(student.getSurname());
+                    existingStudent.setEmail(student.getEmail());
+                    existingStudent.setGender(student.getGender());
+                    existingStudent.setBirthday(student.getBirthday());
+                    return studentRepository.save(existingStudent);
                 }).orElseGet(() -> studentRepository.save(student));
     }
 
-    @DeleteMapping("api/students/{id}")
-    void deleteStudentById(@PathVariable Long id) {
+    @Operation(summary = "Delete a student", description = "Delete a specific student by their ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Student deleted"),
+            @ApiResponse(responseCode = "404", description = "Student not found", content = @Content)
+    })
+    @DeleteMapping("/{id}")
+    public void deleteStudentById(@PathVariable Long id) {
         studentRepository.deleteById(id);
     }
 }

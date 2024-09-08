@@ -39,7 +39,8 @@ public class CourseController {
 
         if (activeCourseId != null) {
             // Fetch students for the active course with pagination
-            Page<Student> studentsPage = studentService.findByCourseId(activeCourseId, PageRequest.of(studentPage, 5));
+            Page<Student> studentsPage = studentService
+                    .findByCourseId(activeCourseId, PageRequest.of(studentPage, 10));
             model.addAttribute("studentsPage", studentsPage); // Student pagination info
             model.addAttribute("students", studentsPage.getContent()); // List of students for active course
         } else {
