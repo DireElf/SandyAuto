@@ -64,4 +64,10 @@ public class StudentController {
         DataUtils.addRandomStudents(courseRepository, studentRepository, 1);
         return "redirect:/students";
     }
+
+    @GetMapping("/remove-all")
+    public String removeAllStudents() {
+        studentService.removeAll();
+        return "redirect:/students";
+    }
 }
