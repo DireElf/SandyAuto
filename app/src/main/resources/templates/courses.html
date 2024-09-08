@@ -14,8 +14,34 @@
     <!-- Custom styles -->
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f4f7fa;
             font-family: 'Arial', sans-serif;
+        }
+        header {
+            background-color: #1e3d58; /* Dark blue */
+        }
+        .navbar-brand {
+            font-size: 1.7em;
+            font-weight: bold;
+            color: #f8f9fa !important;
+        }
+        .navbar-nav .nav-link {
+            color: #d0d8e1 !important; /* Light gray-blue */
+            font-size: 1.1em;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            padding: 8px 15px;
+            transition: all 0.3s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ffffff !important;
+            background-color: #2b506e; /* Mid-blue hover */
+            border-color: #6c7b8d; /* Soft blue border */
+        }
+        .navbar-nav .nav-link.active {
+            background-color: #3a618d;
+            color: #ffffff !important;
+            border-color: #5a8dbd;
         }
         .container {
             margin-top: 40px;
@@ -23,28 +49,23 @@
         .tab-content-container {
             padding: 20px;
             background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            color: #343a40;
+            color: #1e3d58; /* Dark blue */
             margin-bottom: 20px;
         }
         .btn-primary {
-            background-color: #6c757d;
-            border-color: #6c757d;
+            background-color: #3a618d;
+            border-color: #3a618d;
         }
-        .navbar {
-            background-color: #343a40;
-        }
-        .navbar-nav .nav-link {
-            color: #ffffff;
-        }
-        .navbar-nav .nav-link:hover {
-            color: #adb5bd;
+        .btn-primary:hover {
+            background-color: #5a8dbd;
+            border-color: #5a8dbd;
         }
 
-        /* Вкладки с горизонтальным расположением */
+        /* Tabs with horizontal layout */
         .nav-tabs {
             display: flex;
             justify-content: flex-start;
@@ -54,12 +75,12 @@
             margin-right: 5px;
         }
 
-        /* Контент вкладок */
+        /* Tab content */
         .tab-content {
             margin-top: 20px;
         }
 
-        /* Пагинация */
+        /* Pagination */
         .pagination {
             justify-content: center;
         }
@@ -67,40 +88,42 @@
 </head>
 <body>
 
-<!-- Верхнее меню -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Sandy</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/students">Students</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/courses">Courses</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/swagger-ui/index.html">REST API</a>
-                </li>
-            </ul>
+<!-- Header and Navigation -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Sandy</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-3 mb-2 mb-lg-0"> <!-- Align buttons left -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/students">Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/swagger-ui/index.html">REST API</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <h1>Courses</h1>
-        <!-- Кнопка Add справа от заголовка -->
+        <!-- Add button -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
-            Add
+            Add Course
         </button>
     </div>
 
-    <!-- Вкладки курсов -->
+    <!-- Course Tabs -->
     <ul class="nav nav-tabs" id="courseTabs" role="tablist">
         <li th:each="course : ${courses}" class="nav-item" role="presentation">
             <button class="nav-link"
@@ -115,7 +138,7 @@
         </li>
     </ul>
 
-    <!-- Контент вкладок с пагинацией для списка студентов -->
+    <!-- Course Tab Content with Student Pagination -->
     <div class="tab-content" id="courseTabsContent">
         <div th:each="course : ${courses}" class="tab-pane fade"
              th:id="'course-' + ${course.id}"
@@ -142,7 +165,7 @@
                 </tbody>
             </table>
 
-            <!-- Проверка на существование объекта пагинации -->
+            <!-- Pagination -->
             <nav th:if="${studentsPage.totalPages > 1}" aria-label="Student pagination">
                 <ul class="pagination">
                     <li th:classappend="${studentsPage.first} ? 'disabled'" class="page-item">
@@ -164,7 +187,7 @@
     </div>
 </div>
 
-<!-- Модальное окно для добавления курса -->
+<!-- Add Course Modal -->
 <div class="modal fade" id="addCourseModal" tabindex="-1" aria-labelledby="addCourseLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

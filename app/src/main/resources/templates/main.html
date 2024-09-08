@@ -14,42 +14,65 @@
     <!-- Custom styles -->
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f4f7fa;
             font-family: 'Arial', sans-serif;
         }
-        .container {
-            margin-top: 40px;
+        header {
+            background-color: #1e3d58; /* Dark blue */
+        }
+        .navbar-brand {
+            font-size: 1.7em;
+            font-weight: bold;
+            color: #f8f9fa !important;
+        }
+        .navbar-nav .nav-link {
+            color: #d0d8e1 !important; /* Light gray-blue */
+            font-size: 1.1em;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            padding: 8px 15px;
+            transition: all 0.3s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ffffff !important;
+            background-color: #2b506e; /* Mid-blue hover */
+            border-color: #6c7b8d; /* Soft blue border */
+        }
+        .navbar-nav .nav-link.active {
+            background-color: #3a618d;
+            color: #ffffff !important;
+            border-color: #5a8dbd;
         }
         .greeting {
             text-align: center;
-            padding: 20px;
+            padding: 40px 20px;
             background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 60px;
         }
         .greeting h1 {
-            font-size: 2.5em;
-            color: #343a40;
-            margin-bottom: 20px;
+            font-size: 2.8em;
+            color: #1e3d58; /* Dark blue */
         }
         .greeting p {
             font-size: 1.2em;
+            color: #495057;
+            line-height: 1.6;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 10px 0;
+            text-align: center;
             color: #6c757d;
-        }
-        .navbar {
-            background-color: #343a40;
-        }
-        .navbar-nav .nav-link {
-            color: #ffffff;
-        }
-        .navbar-nav .nav-link:hover {
-            color: #adb5bd;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
 
-    <!-- Верхнее меню -->
+<!-- Header and Navigation -->
+<header>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Sandy</a>
@@ -57,9 +80,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-3 mb-2 mb-lg-0"> <!-- Align buttons left -->
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/students">Students</a>
+                        <a class="nav-link" href="/students">Students</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/courses">Courses</a>
@@ -71,18 +94,28 @@
             </div>
         </div>
     </nav>
+</header>
 
-    <!-- Приветственное сообщение -->
+<!-- Main Content -->
+<main>
     <div class="container">
         <div class="greeting">
             <h1>Welcome to Sandy</h1>
-            <p><strong>Hello! I'm Sandy, an app designed to help you practice automation testing skills.</strong></p>
-            <p>On the <strong>Students</strong> page, you can view and manage the list of students, their details, and associated courses.</p>
-            <p>On the <strong>Courses</strong> page, you can explore available courses, see which students are enrolled, and add new courses.</p>
+            <p><strong>Hello! I'm Sandy, your personal assistant for practicing automation testing skills.</strong></p>
+            <p>On the <strong>Students</strong> page, you can view and manage students, their details, and associated courses.</p>
+            <p>On the <strong>Courses</strong> page, you can explore available courses, see enrolled students, and add new courses.</p>
         </div>
     </div>
+</main>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2024 Sandy App. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
