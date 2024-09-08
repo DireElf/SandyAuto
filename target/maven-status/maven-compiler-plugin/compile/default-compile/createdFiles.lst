@@ -1,0 +1,15 @@
+sandy\auto\service\CourseService.class
+sandy\auto\controllers\CourseController.class
+sandy\auto\controllers\api\StudentControllerAPI.class
+sandy\auto\repository\StudentRepository.class
+sandy\auto\service\MainService.class
+sandy\auto\repository\CourseRepository.class
+sandy\auto\controllers\StudentController.class
+sandy\auto\models\enums\Gender.class
+sandy\auto\models\Student.class
+sandy\auto\controllers\MainController.class
+sandy\auto\SandyApplication.class
+sandy\auto\service\StudentService.class
+sandy\auto\config\DataInitializer.class
+sandy\auto\models\Course.class
+sandy\auto\controllers\api\CourseControllerAPI.class

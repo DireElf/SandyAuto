@@ -27,18 +27,12 @@ public class CourseController {
 
     @GetMapping
     public String listCourses(Model model,
-                              @RequestParam(required = false) Long activeTab,
-                              @RequestParam(defaultValue = "0") int studentPage) {
+                              @RequestParam(required = false) Long activeTab) {
+
         List<Course> courses = courseService.findAll();
         model.addAttribute("courses", courses);
-
-        Long activeCourseId = activeTab != null ? activeTab : courses.get(0).getId();
-        model.addAttribute("activeTab", activeCourseId);
-
-        Page<Student> studentsPage = studentService
-                .findByCourseId(activeCourseId, PageRequest.of(studentPage, 10));
-        model.addAttribute("studentsPage", studentsPage);
-        model.addAttribute("students", studentsPage.getContent());
+        model.addAttribute("activeTab",
+                activeTab != null ? activeTab : courses.get(0).getId());
         return "courses";
     }
 

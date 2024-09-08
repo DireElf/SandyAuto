@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="View and manage courses and students enrolled in them.">
-    <meta name="keywords" content="Courses, Students, SandyBox, Automation Testing">
-    <meta name="author" content="SandyBox App">
-    <title>Courses - SandyBox</title>
+    <meta name="keywords" content="Courses, Students, Sandy, Automation Testing">
+    <meta name="author" content="Sandy App">
+    <title>Courses - Sandy</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -14,34 +14,8 @@
     <!-- Custom styles -->
     <style>
         body {
-            background-color: #f4f7fa;
+            background-color: #f8f9fa;
             font-family: 'Arial', sans-serif;
-        }
-        header {
-            background-color: #1e3d58; /* Dark blue */
-        }
-        .navbar-brand {
-            font-size: 1.7em;
-            font-weight: bold;
-            color: #f8f9fa !important;
-        }
-        .navbar-nav .nav-link {
-            color: #d0d8e1 !important; /* Light gray-blue */
-            font-size: 1.1em;
-            border: 2px solid transparent;
-            border-radius: 5px;
-            padding: 8px 15px;
-            transition: all 0.3s;
-        }
-        .navbar-nav .nav-link:hover {
-            color: #ffffff !important;
-            background-color: #2b506e; /* Mid-blue hover */
-            border-color: #6c7b8d; /* Soft blue border */
-        }
-        .navbar-nav .nav-link.active {
-            background-color: #3a618d;
-            color: #ffffff !important;
-            border-color: #5a8dbd;
         }
         .container {
             margin-top: 40px;
@@ -49,76 +23,111 @@
         .tab-content-container {
             padding: 20px;
             background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            color: #1e3d58; /* Dark blue */
+            color: #343a40;
             margin-bottom: 20px;
         }
         .btn-primary {
-            background-color: #3a618d;
-            border-color: #3a618d;
+            background-color: #6c757d;
+            border-color: #6c757d;
         }
-        .btn-primary:hover {
-            background-color: #5a8dbd;
-            border-color: #5a8dbd;
+		.navbar {
+            background-color: #343a40;
         }
-
-        /* Tabs with horizontal layout */
-        .nav-tabs {
-            display: flex;
-            justify-content: flex-start;
-            overflow-x: auto;
+        .navbar-nav .nav-link {
+            color: #ffffff;
         }
-        .nav-tabs .nav-item {
-            margin-right: 5px;
+        .navbar-nav .nav-link:hover {
+            color: #adb5bd;
         }
 
-        /* Tab content */
-        .tab-content {
-            margin-top: 20px;
-        }
 
-        /* Pagination */
-        .pagination {
-            justify-content: center;
-        }
+
     </style>
 </head>
 <body>
 
-<!-- Header and Navigation -->
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">SandyBox</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-3 mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/students">Students</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/courses">Courses</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/swagger-ui/index.html">REST API</a>
-                    </li>
-                </ul>
-            </div>
+<!-- Верхнее меню -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Sandy</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/students">Students</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/courses">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/swagger-ui/index.html">REST API</a>
+                </li>
+            </ul>
         </div>
-    </nav>
-</header>
+    </div>
+</nav>
+
+<!--<div class="container">-->
+<!--    <div class="tab-content-container">-->
+<!--        <h1>Courses</h1>-->
+
+<!--        &lt;!&ndash; Вкладки с курсами &ndash;&gt;-->
+<!--        <ul class="nav nav-tabs" id="courseTabs" role="tablist">-->
+<!--            &lt;!&ndash; Вкладки с курсами &ndash;&gt;-->
+<!--            <li th:each="course : ${courses}" class="nav-item" role="presentation">-->
+<!--                <button class="nav-link"-->
+<!--                        th:id="'tab-course-' + ${course.id}"-->
+<!--                        th:classappend="${course.id == activeTab} ? ' active'"-->
+<!--                        data-bs-toggle="tab"-->
+<!--                        th:data-bs-target="'#course-' + ${course.id}"-->
+<!--                        type="button"-->
+<!--                        role="tab"-->
+<!--                        th:text="${course.title}">-->
+<!--                </button>-->
+<!--            </li>-->
+<!--        </ul>-->
+
+<!--        &lt;!&ndash; Контент вкладок &ndash;&gt;-->
+<!--        <div class="tab-content mt-4" id="courseTabsContent">-->
+<!--            <div th:each="course : ${courses}" class="tab-pane fade"-->
+<!--                 th:id="'course-' + ${course.id}"-->
+<!--                 th:classappend="${course.id == activeTab} ? ' show active'"-->
+<!--                 role="tabpanel">-->
+<!--                <h2 th:text="'Students in ' + ${course.title}"></h2>-->
+<!--                <table class="table table-striped table-hover">-->
+<!--                    <thead class="table-dark">-->
+<!--                    <tr>-->
+<!--                        <th>Student Name</th>-->
+<!--                        <th>Student Surname</th>-->
+<!--                        <th>Email</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                    <tr th:each="student : ${course.students}">-->
+<!--                        <td th:text="${student.name}"></td>-->
+<!--                        <td th:text="${student.surname}"></td>-->
+<!--                        <td th:text="${student.email}"></td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <h1>Courses</h1>
+        <!-- Кнопка Add справа от заголовка -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
-            Add Course
+            Add
         </button>
     </div>
 
@@ -164,7 +173,7 @@
     </div>
 </div>
 
-<!-- Add Course Modal -->
+<!-- Модальное окно для добавления курса -->
 <div class="modal fade" id="addCourseModal" tabindex="-1" aria-labelledby="addCourseLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -190,6 +199,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

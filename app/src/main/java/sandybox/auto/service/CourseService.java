@@ -15,10 +15,6 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public Page<Course> findAll(Pageable pageable) {
-        return courseRepository.findAllWithStudents(pageable);
-    }
-
     public List<Course> findAll() {
         return courseRepository.findAll();
     }

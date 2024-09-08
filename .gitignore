@@ -1,4 +1,4 @@
-app/target/
+app/target
 !app/.mvn/wrapper/maven-wrapper.jar
 !app/**/src/main/**/target/
 !app/**/src/test/**/target/
