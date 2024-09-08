@@ -2,8 +2,11 @@ package sandy.auto.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.RequestMapping;
 import sandy.auto.models.Course;
 import sandy.auto.models.Student;
+import sandy.auto.repository.CourseRepository;
+import sandy.auto.repository.StudentRepository;
 import sandy.auto.service.CourseService;
 import sandy.auto.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sandy.auto.utils.DataUtils;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/students")
 public class StudentController {
 
     @Autowired
@@ -24,7 +29,13 @@ public class StudentController {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping("/students")
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @GetMapping()
     public String listStudents(Model model, @RequestParam(defaultValue = "0") int page) {
         Page<Student> studentsPage = studentService.findAll(PageRequest.of(page, 10));
         List<Course> courses = courseService.findAll();
@@ -36,7 +47,7 @@ public class StudentController {
         return "students";
     }
 
-    @PostMapping("/students/add")
+    @PostMapping("/add")
     public String addStudent(@RequestParam String name,
                              @RequestParam String surname,
                              @RequestParam String email,
@@ -46,5 +57,11 @@ public class StudentController {
         student.setCourse(course); // Связываем студента с курсом
         studentService.save(student);
         return "redirect:/students"; // После добавления студента перенаправляем на список
+    }
+
+    @PostMapping("/add-random")
+    public String addRandom() {
+        DataUtils.addRandomStudents(courseRepository, studentRepository, 1);
+        return "redirect:/students";
     }
 }

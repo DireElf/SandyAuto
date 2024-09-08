@@ -2,6 +2,7 @@ package sandy.auto.utils;
 
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sandy.auto.models.Course;
 import sandy.auto.models.Student;
 import sandy.auto.repository.CourseRepository;
@@ -12,13 +13,7 @@ import java.util.Random;
 
 public class DataUtils {
 
-    @Autowired
-    private static CourseRepository courseRepository;
-
-    @Autowired
-    private static StudentRepository studentRepository;
-
-    public static void createDefaultCourse() {
+    public static void createDefaultCourse(CourseRepository courseRepository) {
         if (!courseRepository.existsByTitle("No course")) {
             Course noCourse = new Course();
             noCourse.setTitle("No course");
@@ -27,9 +22,9 @@ public class DataUtils {
         }
     }
 
-    public static void addRandomCourses(int number) {
+    public static void addRandomCourses(CourseRepository courseRepository, int number) {
         Faker faker = new Faker();
-        for(int i = 0; i < number; i++) {
+        for(int i = 1; i <= number; i++) {
             Course course = new Course();
             course.setTitle(faker.programmingLanguage().name());
             course.setFree(true);
@@ -37,11 +32,14 @@ public class DataUtils {
         }
     }
 
-    public static void addRandomStudents(int number) {
+    public static void addRandomStudents(CourseRepository courseRepository,
+                                         StudentRepository studentRepository,
+                                         int number)
+    {
         Faker faker = new Faker();
         List<Long> coursesIds = courseRepository.findAll().stream()
                 .mapToLong(Course::getId).boxed().toList();
-        for(int i = 0; i < number; i++) {
+        for(int i = 1; i <= number; i++) {
             Student student = new Student();
             student.setName(faker.name().firstName());
             student.setSurname(faker.name().lastName());
