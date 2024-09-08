@@ -40,9 +40,9 @@ public class StudentController {
         Page<Student> studentsPage = studentService.findAll(PageRequest.of(page, 10));
         List<Course> courses = courseService.findAll();
 
-        model.addAttribute("students", studentsPage.getContent()); // Список студентов на текущей странице
-        model.addAttribute("courses", courses); // Курсы для выпадающего списка
-        model.addAttribute("page", studentsPage); // Объект страницы для работы с пагинацией
+        model.addAttribute("students", studentsPage.getContent());
+        model.addAttribute("courses", courses);
+        model.addAttribute("page", studentsPage);
 
         return "students";
     }
@@ -54,9 +54,9 @@ public class StudentController {
                              @RequestParam Long courseId) {
         Course course = courseService.findById(courseId);
         Student student = new Student(name, surname, email);
-        student.setCourse(course); // Связываем студента с курсом
+        student.setCourse(course);
         studentService.save(student);
-        return "redirect:/students"; // После добавления студента перенаправляем на список
+        return "redirect:/students";
     }
 
     @PostMapping("/add-random")

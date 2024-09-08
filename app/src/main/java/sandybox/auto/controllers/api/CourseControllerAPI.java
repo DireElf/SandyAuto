@@ -82,6 +82,7 @@ public class CourseControllerAPI {
     })
     @DeleteMapping("/{id}")
     public void deleteCoursesById(@PathVariable Long id) {
+        if (id == 1L) throw new RuntimeException("Course 'No course' cannot be deleted");
         courseRepository.deleteById(id);
     }
 }

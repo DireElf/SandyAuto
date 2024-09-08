@@ -33,7 +33,6 @@ public class Student {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    // Constructors
     public Student() {
     }
 
@@ -51,7 +50,6 @@ public class Student {
         this.email = email;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

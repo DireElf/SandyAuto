@@ -29,22 +29,18 @@ public class CourseController {
     public String listCourses(Model model,
                               @RequestParam(required = false) Long activeTab,
                               @RequestParam(defaultValue = "0") int studentPage) {
-        // Fetch all courses (no pagination for course tabs)
         List<Course> courses = courseService.findAll();
-        model.addAttribute("courses", courses);  // List of courses
+        model.addAttribute("courses", courses);
 
-        // Handle active tab (if provided)
         Long activeCourseId = activeTab != null ? activeTab : (!courses.isEmpty() ? courses.get(0).getId() : null);
         model.addAttribute("activeTab", activeCourseId);
 
         if (activeCourseId != null) {
-            // Fetch students for the active course with pagination
             Page<Student> studentsPage = studentService
                     .findByCourseId(activeCourseId, PageRequest.of(studentPage, 10));
-            model.addAttribute("studentsPage", studentsPage); // Student pagination info
-            model.addAttribute("students", studentsPage.getContent()); // List of students for active course
+            model.addAttribute("studentsPage", studentsPage);
+            model.addAttribute("students", studentsPage.getContent());
         } else {
-            // Если студентов нет, передаем пустую страницу
             model.addAttribute("studentsPage", Page.empty());
             model.addAttribute("students", List.of());
         }

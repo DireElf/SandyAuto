@@ -21,7 +21,6 @@ public class Course {
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Student> students = new HashSet<>();
 
-    // Constructors
     public Course() {
     }
 
@@ -30,7 +29,6 @@ public class Course {
         this.isFree = isFree;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -63,7 +61,6 @@ public class Course {
         this.students = students;
     }
 
-    // Methods to manage bidirectional relationship
     public void addStudent(Student student) {
         this.students.add(student);
         student.setCourse(this);
