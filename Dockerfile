@@ -2,7 +2,13 @@ FROM openjdk:11-jdk-slim
 
 WORKDIR /app
 
-COPY . /app
+COPY .mvn/ .mvn
+
+COPY mvnw pom.xml ./
+
+RUN ./mvnw dependency:resolve
+
+COPY src ./src
 
 RUN chmod +x mvnw
 
