@@ -2,6 +2,7 @@ package sandy.auto.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import sandy.auto.models.Student;
@@ -19,5 +20,9 @@ public class StudentService {
 
     public void removeAll() {
         studentRepository.deleteAll();
+    }
+
+    public Page<Student> findByCourseId(Long courseId, PageRequest pageRequest) {
+        return studentRepository.findByCourseId(courseId, pageRequest);
     }
 }
