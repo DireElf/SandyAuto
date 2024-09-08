@@ -1,6 +1,6 @@
 package sandy.auto.models;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import sandy.auto.models.enums.Gender;
 
 import java.time.LocalDate;
