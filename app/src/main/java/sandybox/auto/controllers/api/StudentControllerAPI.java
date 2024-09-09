@@ -7,8 +7,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
+import sandybox.auto.models.Course;
 import sandybox.auto.models.Student;
+import sandybox.auto.models.dto.StudentDTO;
 import sandybox.auto.repository.StudentRepository;
+import sandybox.auto.service.StudentService;
 
 import java.util.List;
 
@@ -19,8 +22,11 @@ public class StudentControllerAPI {
 
     private final StudentRepository studentRepository;
 
-    public StudentControllerAPI(StudentRepository studentRepository) {
+    private final StudentService studentService;
+
+    public StudentControllerAPI(StudentRepository studentRepository, StudentService studentService) {
         this.studentRepository = studentRepository;
+        this.studentService = studentService;
     }
 
     @Operation(summary = "Get all students", description = "Retrieve all students from the system")
@@ -52,30 +58,30 @@ public class StudentControllerAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Student created",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Student.class))}),
+                            schema = @Schema(implementation = StudentDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
     @PostMapping
-    public Student addStudent(@RequestBody Student student) {
-        return studentRepository.save(student);
+    public Student addStudent(@RequestBody StudentDTO studentDTO) {
+        return studentRepository.save(studentService.getStudentFromDTO(studentDTO));
     }
 
     @Operation(summary = "Update a student", description = "Update details of an existing student")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Student updated",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Student.class))}),
+                            schema = @Schema(implementation = StudentDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Student not found", content = @Content)
     })
     @PutMapping("/{id}")
-    public Student replaceStudent(@RequestBody Student student, @PathVariable Long id) {
+    public Student replaceStudent(@RequestBody StudentDTO studentDTO, @PathVariable Long id) {
+        Student student = studentService.getStudentFromDTO(studentDTO);
         return studentRepository.findById(id)
                 .map(existingStudent -> {
                     existingStudent.setName(student.getName());
                     existingStudent.setSurname(student.getSurname());
                     existingStudent.setEmail(student.getEmail());
-                    existingStudent.setGender(student.getGender());
-                    existingStudent.setBirthday(student.getBirthday());
+                    existingStudent.setCourse(student.getCourse());
                     return studentRepository.save(existingStudent);
                 }).orElseGet(() -> studentRepository.save(student));
     }

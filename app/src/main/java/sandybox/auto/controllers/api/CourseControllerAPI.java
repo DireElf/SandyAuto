@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 import sandybox.auto.models.Course;
+import sandybox.auto.models.dto.CourseDTO;
 import sandybox.auto.repository.CourseRepository;
+import sandybox.auto.service.CourseService;
 
 import java.util.List;
 
@@ -19,8 +21,11 @@ public class CourseControllerAPI {
 
     private final CourseRepository courseRepository;
 
-    public CourseControllerAPI(CourseRepository courseRepository) {
+    private final CourseService courseService;
+
+    public CourseControllerAPI(CourseRepository courseRepository, CourseService courseService) {
         this.courseRepository = courseRepository;
+        this.courseService = courseService;
     }
 
     @Operation(summary = "Get all courses", description = "Retrieve all courses from the system")
@@ -49,11 +54,12 @@ public class CourseControllerAPI {
     @Operation(summary = "Add a new course", description = "Create a new course in the system")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Course created",
-                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Course.class))}),
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CourseDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
     @PostMapping
-    public Course addCourse(@RequestBody Course course) {
+    public Course addCourse(@RequestBody CourseDTO courseDTO) {
+        Course course = courseService.getCourseFromDTO(courseDTO);
         return courseRepository.save(course);
     }
 
@@ -61,11 +67,12 @@ public class CourseControllerAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Course updated",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Course.class))}),
+                            schema = @Schema(implementation = CourseDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Course not found", content = @Content)
     })
     @PutMapping("/{id}")
-    public Course replaceCourse(@RequestBody Course course, @PathVariable Long id) {
+    public Course replaceCourse(@RequestBody CourseDTO courseDTO, @PathVariable Long id) {
+        Course course = courseService.getCourseFromDTO(courseDTO);
         return courseRepository.findById(id)
                 .map(existingCourse -> {
                     existingCourse.setTitle(course.getTitle());

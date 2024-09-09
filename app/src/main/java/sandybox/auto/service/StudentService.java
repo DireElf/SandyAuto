@@ -6,12 +6,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import sandybox.auto.models.Student;
+import sandybox.auto.models.dto.StudentDTO;
+import sandybox.auto.repository.CourseRepository;
 import sandybox.auto.repository.StudentRepository;
 
 @Service
 public class StudentService {
     @Autowired
     StudentRepository studentRepository;
+    @Autowired
+    CourseRepository courseRepository;
 
     public Page<Student> findAll(Pageable pageable) {
         return studentRepository.findAll(pageable);
@@ -25,5 +29,16 @@ public class StudentService {
 
     public Page<Student> findByCourseId(Long courseId, PageRequest pageRequest) {
         return studentRepository.findByCourseId(courseId, pageRequest);
+    }
+
+    public Student getStudentFromDTO(StudentDTO studentDTO) {
+        Student student = new Student();
+        student.setName(studentDTO.getName());
+        student.setSurname(studentDTO.getSurname());
+        student.setEmail(studentDTO.getEmail());
+        student.setCourse(
+                courseRepository.findByTitle(studentDTO.getCourseName())
+        );
+        return student;
     }
 }
