@@ -1,6 +1,8 @@
 package sandybox.auto.models;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import sandybox.auto.models.enums.Gender;
 
 import java.time.LocalDate;
@@ -29,6 +31,7 @@ public class Student {
     @Column()
     private LocalDate birthday;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
