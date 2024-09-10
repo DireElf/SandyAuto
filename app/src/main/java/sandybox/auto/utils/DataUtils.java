@@ -6,8 +6,7 @@ import sandybox.auto.models.Student;
 import sandybox.auto.repository.CourseRepository;
 import sandybox.auto.repository.StudentRepository;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DataUtils {
@@ -23,30 +22,45 @@ public class DataUtils {
 
     public static void addRandomCourses(CourseRepository courseRepository, int number) {
         Faker faker = new Faker();
-        for(int i = 1; i <= number; i++) {
+        Set<String> titleSet = new HashSet<>();
+        List<Course> coursesToSave = new ArrayList<>();
+        for (int i = 1; i <= number; i++) {
+            String title = faker.educator().course();
+            while (titleSet.contains(title) || courseRepository.existsByTitle(title)) {
+                title = faker.educator().course();
+            }
+            titleSet.add(title);
             Course course = new Course();
-            course.setTitle(faker.educator().course());
+            course.setTitle(title);
             course.setFree(true);
-            courseRepository.save(course);
+            coursesToSave.add(course);
         }
+        courseRepository.saveAll(coursesToSave);
     }
+
 
     public static void addRandomStudents(CourseRepository courseRepository,
                                          StudentRepository studentRepository,
-                                         int number)
-    {
+                                         int number) {
         Faker faker = new Faker();
-        List<Long> coursesIds = courseRepository.findAll().stream()
-                .mapToLong(Course::getId).boxed().collect(Collectors.toList());
-        for(int i = 1; i <= number; i++) {
+        Random random = new Random();
+        List<Long> courseIds = courseRepository.findAll().stream()
+                .map(Course::getId)
+                .collect(Collectors.toList());
+        List<Student> studentsToSave = new ArrayList<>();
+        for (int i = 1; i <= number; i++) {
+            String email = faker.internet().emailAddress();
+            while (studentRepository.existsByEmail(email)) {
+                email = faker.internet().emailAddress();
+            }
             Student student = new Student();
             student.setName(faker.name().firstName());
             student.setSurname(faker.name().lastName());
-            student.setEmail(faker.internet().emailAddress());
-            Random random = new Random();
-            Long courseId = coursesIds.get(random.nextInt(coursesIds.size()));
+            student.setEmail(email);
+            Long courseId = courseIds.get(random.nextInt(courseIds.size()));
             student.setCourse(courseRepository.findById(courseId).orElse(null));
-            studentRepository.save(student);
+            studentsToSave.add(student);
         }
+        studentRepository.saveAll(studentsToSave);
     }
 }

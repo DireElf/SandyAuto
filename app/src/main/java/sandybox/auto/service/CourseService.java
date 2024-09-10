@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import sandybox.auto.models.Course;
 import sandybox.auto.models.Student;
 import sandybox.auto.models.dto.CourseDTO;
+import sandybox.auto.models.dto.StudentDTO;
 import sandybox.auto.repository.CourseRepository;
 import sandybox.auto.repository.StudentRepository;
 
@@ -22,6 +23,9 @@ public class CourseService {
     private CourseRepository courseRepository;
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private StudentService studentService;
 
     public List<Course> findAll() {
         return courseRepository.findAll();
@@ -39,8 +43,38 @@ public class CourseService {
         Course course = new Course();
         course.setTitle(courseDTO.getTitle());
         course.setFree(courseDTO.isFree());
-        Set<Student> students = new HashSet<>(studentRepository.findByCourseTitle(courseDTO.getTitle()));
+        Set<Student> students = courseDTO.getStudents().stream()
+                .map(studentDTO -> studentService.getStudentFromDTO(studentDTO))
+                .collect(Collectors.toSet());
         course.setStudents(students);
         return course;
+    }
+
+    public CourseDTO getCourseDTOFromCourse(Course course) {
+        CourseDTO courseDTO = new CourseDTO();
+        courseDTO.setTitle(course.getTitle());
+        courseDTO.setFree(course.isFree());
+        courseDTO.setStudents(course.getStudents().stream()
+                .map(student -> studentService.getStudentDTOFromStudent(student))
+                .collect(Collectors.toSet()));
+        return courseDTO;
+    }
+
+    public Boolean courseHasNonExistedStudent(Course course) {
+        Set<Long> studentIds = course.getStudents().stream()
+                .map(Student::getId)
+                .collect(Collectors.toSet());
+        long existingStudentsCount = studentRepository.countByIdIn(studentIds);
+        return existingStudentsCount != studentIds.size();
+    }
+
+    public Course updateCourseOrAddNew(Course course, Long id) {
+        return courseRepository.findById(id)
+                .map(existingCourse -> {
+                    existingCourse.setTitle(course.getTitle());
+                    existingCourse.setFree(course.isFree());
+                    existingCourse.setStudents(course.getStudents());
+                    return courseRepository.save(existingCourse);
+                }).orElseGet(() -> courseRepository.save(course));
     }
 }

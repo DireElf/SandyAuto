@@ -41,4 +41,13 @@ public class StudentService {
         );
         return student;
     }
+
+    public StudentDTO getStudentDTOFromStudent(Student student) {
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setName(student.getName());
+        studentDTO.setSurname(student.getSurname());
+        studentDTO.setEmail(student.getEmail());
+        studentDTO.setCourseName(student.getCourse().getTitle());
+        return studentDTO;
+    }
 }

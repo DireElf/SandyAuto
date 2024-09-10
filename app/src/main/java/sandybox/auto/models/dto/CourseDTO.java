@@ -1,15 +1,13 @@
 package sandybox.auto.models.dto;
 
-import sandybox.auto.models.Student;
-
-import java.util.List;
+import java.util.Set;
 
 public class CourseDTO {
     private String title;
     private boolean isFree;
-    private List<Student> students;
+    private Set<StudentDTO> students;
 
-    public CourseDTO(String title, boolean isFree, List<Student> students) {
+    public CourseDTO(String title, boolean isFree, Set<StudentDTO> students) {
         this.title = title;
         this.isFree = isFree;
         this.students = students;
@@ -34,11 +32,11 @@ public class CourseDTO {
         isFree = free;
     }
 
-    public List<Student> getStudents() {
+    public Set<StudentDTO> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(Set<StudentDTO> students) {
         this.students = students;
     }
 }
