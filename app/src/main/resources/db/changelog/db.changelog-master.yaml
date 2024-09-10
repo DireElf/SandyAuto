@@ -23,6 +23,10 @@ databaseChangeLog:
                   type: BOOLEAN
                   constraints:
                     nullable: false
+        - addUniqueConstraint:
+            columnNames: title
+            tableName: courses
+            constraintName: uq_courses_title
 
   - changeSet:
       id: 2
@@ -68,6 +72,10 @@ databaseChangeLog:
                   type: BIGINT
                   constraints:
                     nullable: true
+        - addUniqueConstraint:
+            columnNames: email
+            tableName: students
+            constraintName: uq_students_email
 
   - changeSet:
       id: 3
