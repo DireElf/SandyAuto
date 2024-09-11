@@ -70,7 +70,7 @@ public class CourseControllerAPI {
     public ResponseEntity<?> addCourse(@RequestBody CourseDTO courseDTO) {
         Course course = courseService.getCourseFromDTO(courseDTO);
         if (courseService.courseHasNonExistedStudent(course)) {
-            return ResponseEntity.badRequest().body("Course contains non-existing student(s)");
+            return ResponseEntity.badRequest().body("Course contains non-existent student(s)");
         }
         Course savedCourse = courseRepository.save(course);
         CourseDTO savedCourseDTO = courseService.getCourseDTOFromCourse(savedCourse);
@@ -91,7 +91,7 @@ public class CourseControllerAPI {
         }
         Course course = courseService.getCourseFromDTO(courseDTO);
         if (courseService.courseHasNonExistedStudent(course)) {
-            return ResponseEntity.badRequest().body("Course contains non-existing student(s)");
+            return ResponseEntity.badRequest().body("Course contains non-existent student(s)");
         }
         Course updatedCourse = courseService.updateCourseOrAddNew(course, id);
         CourseDTO updatedCourseDTO = courseService.getCourseDTOFromCourse(updatedCourse);

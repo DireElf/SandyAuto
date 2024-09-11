@@ -52,6 +52,7 @@ public class CourseService {
 
     public CourseDTO getCourseDTOFromCourse(Course course) {
         CourseDTO courseDTO = new CourseDTO();
+        courseDTO.setId(course.getId());
         courseDTO.setTitle(course.getTitle());
         courseDTO.setFree(course.isFree());
         courseDTO.setStudents(course.getStudents().stream()
