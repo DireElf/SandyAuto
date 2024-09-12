@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import sandybox.auto.models.Course;
 import sandybox.auto.models.Student;
 import sandybox.auto.models.dto.StudentDTO;
 import sandybox.auto.repository.CourseRepository;
@@ -44,10 +45,22 @@ public class StudentService {
 
     public StudentDTO getStudentDTOFromStudent(Student student) {
         StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setId(student.getId());
         studentDTO.setName(student.getName());
         studentDTO.setSurname(student.getSurname());
         studentDTO.setEmail(student.getEmail());
         studentDTO.setCourseName(student.getCourse().getTitle());
         return studentDTO;
+    }
+
+    public Student updateStudentOrAddNew(Student student, Long id) {
+        return studentRepository.findById(id)
+                .map(existingStudent -> {
+                    existingStudent.setName(student.getName());
+                    existingStudent.setSurname(student.getSurname());
+                    existingStudent.setEmail(student.getEmail());
+                    existingStudent.setCourse(student.getCourse());
+                    return studentRepository.save(existingStudent);
+                }).orElseGet(() -> studentRepository.save(student));
     }
 }

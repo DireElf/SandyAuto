@@ -14,6 +14,7 @@ import sandybox.auto.models.dto.CourseDTO;
 import sandybox.auto.repository.CourseRepository;
 import sandybox.auto.service.CourseService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,9 @@ public class CourseControllerAPI {
     @GetMapping
     public ResponseEntity<List<CourseDTO>> getAllCourses() {
         List<Course> courseList = courseRepository.findAll();
+        if (courseList.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+        }
         List<CourseDTO> courseDTOList = courseList.stream()
                 .map(courseService::getCourseDTOFromCourse)
                 .collect(Collectors.toList());
@@ -54,10 +58,11 @@ public class CourseControllerAPI {
             @ApiResponse(responseCode = "404", description = "Course not found", content = @Content)
     })
     @GetMapping("/{id}")
-    public CourseDTO getCourseById(@PathVariable Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
-        return courseService.getCourseDTOFromCourse(course);
+    public ResponseEntity<?> getCourseById(@PathVariable Long id) {
+        Course course = courseRepository
+                .findById(id).orElseThrow(() -> new RuntimeException("Course not found"));
+        CourseDTO courseDTO = courseService.getCourseDTOFromCourse(course);
+        return ResponseEntity.ok(courseDTO);
     }
 
     @Operation(summary = "Add a new course", description = "Create a new course in the system")
@@ -74,8 +79,8 @@ public class CourseControllerAPI {
             return ResponseEntity.badRequest().body("Course contains non-existent student(s)");
         }
         Course savedCourse = courseRepository.save(course);
-        CourseDTO savedCourseDTO = courseService.getCourseDTOFromCourse(savedCourse);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCourseDTO);
+        courseDTO.setId(savedCourse.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(courseDTO);
     }
 
     @Operation(summary = "Update a course", description = "Update details of an existing course")
@@ -95,8 +100,8 @@ public class CourseControllerAPI {
             return ResponseEntity.badRequest().body("Course contains non-existent student(s)");
         }
         Course updatedCourse = courseService.updateCourseOrAddNew(course, id);
-        CourseDTO updatedCourseDTO = courseService.getCourseDTOFromCourse(updatedCourse);
-        return ResponseEntity.ok(updatedCourseDTO);
+        courseDTO.setId(updatedCourse.getId());
+        return ResponseEntity.ok(courseDTO);
     }
 
 
@@ -109,6 +114,8 @@ public class CourseControllerAPI {
     public ResponseEntity<?> deleteCoursesById(@PathVariable Long id) {
         if (id == 1L) {
             return ResponseEntity.badRequest().body("Course 'No course' cannot be deleted");
+        } else if (!courseRepository.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         courseRepository.deleteById(id);
         return ResponseEntity.noContent().build();

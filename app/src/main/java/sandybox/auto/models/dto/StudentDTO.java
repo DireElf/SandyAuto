@@ -1,12 +1,14 @@
 package sandybox.auto.models.dto;
 
 public class StudentDTO {
+    private Long id;
     private String name;
     private String surname;
     private String email;
     private String courseName;
 
-    public StudentDTO(String name, String surname, String email, String courseName) {
+    public StudentDTO(String name, String surname, String email, String courseName, Long id) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -14,6 +16,14 @@ public class StudentDTO {
     }
 
     public StudentDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
