@@ -63,7 +63,8 @@ public class CourseControllerAPI {
     @Operation(summary = "Add a new course", description = "Create a new course in the system")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Course created",
-                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CourseDTO.class))}),
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
     @PostMapping

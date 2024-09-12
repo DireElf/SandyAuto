@@ -1,6 +1,8 @@
 package sandybox.auto.utils;
 
 import com.github.javafaker.Faker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sandybox.auto.models.Course;
 import sandybox.auto.models.Student;
 import sandybox.auto.repository.CourseRepository;
@@ -8,10 +10,14 @@ import sandybox.auto.repository.StudentRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+@Component
 public class DataUtils {
+    @Autowired
+    private CourseRepository courseRepository;
+    @Autowired
+    private StudentRepository studentRepository;
 
-    public static void createDefaultCourse(CourseRepository courseRepository) {
+    public void createDefaultCourse() {
         if (!courseRepository.existsByTitle("No course")) {
             Course noCourse = new Course();
             noCourse.setTitle("No course");
@@ -20,7 +26,7 @@ public class DataUtils {
         }
     }
 
-    public static void addRandomCourses(CourseRepository courseRepository, int number) {
+    public void addRandomCourses(int number) {
         Faker faker = new Faker();
         Set<String> titleSet = new HashSet<>();
         List<Course> coursesToSave = new ArrayList<>();
@@ -39,9 +45,7 @@ public class DataUtils {
     }
 
 
-    public static void addRandomStudents(CourseRepository courseRepository,
-                                         StudentRepository studentRepository,
-                                         int number) {
+    public void addRandomStudents(int number) {
         Faker faker = new Faker();
         Random random = new Random();
         List<Long> courseIds = courseRepository.findAll().stream()

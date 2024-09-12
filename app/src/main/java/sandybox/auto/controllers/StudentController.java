@@ -34,6 +34,8 @@ public class StudentController {
 
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private DataUtils dataUtils;
 
     @GetMapping()
     public String listStudents(Model model, @RequestParam(defaultValue = "0") int page) {
@@ -61,7 +63,7 @@ public class StudentController {
 
     @PostMapping("/add-random")
     public String addRandom() {
-        DataUtils.addRandomStudents(courseRepository, studentRepository, 1);
+        dataUtils.addRandomStudents(1);
         return "redirect:/students";
     }
 
