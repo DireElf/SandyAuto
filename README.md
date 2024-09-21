@@ -9,7 +9,7 @@
 - Для запуска на Linux выполните в директории проекта
 
 ```bash
-bash run-on-linux.sh
+./run-on-linux.sh
 ```
 (в случае появления сообщения 'Permission denied' перейдите в директорию /app и выполните команду chmod a+x mvnw)
 
