@@ -9,12 +9,10 @@
 - Для запуска на Linux выполните в директории проекта
 
 ```bash
+chmod +x run-on-linux.sh
 ./run-on-linux.sh
 ```
-В случае появления сообщения 'Permission denied' выполните команду
-```bash
-chmod a+x run-on-linux.sh
-```
+
 ## Функциональность текущего релиза
 
 ### Главная страница
